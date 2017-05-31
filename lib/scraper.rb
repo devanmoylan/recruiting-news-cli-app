@@ -17,7 +17,9 @@ scouts_url = "http://www.scout.com/college/football/recruiting/news?type=stories
         :link => post.css(".story-deck .story-stuff a").attribute("href").value
       }
     end
+    binding.pry
     @posts
   end
 
+scrape_scouts_newsfeed(scouts_url)
 end
