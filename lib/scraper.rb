@@ -21,5 +21,5 @@ scouts_url = "http://www.scout.com/college/football/recruiting/news?type=stories
     @posts
   end
 
-scrape_scouts_newsfeed(scouts_url)
+self.scrape_scouts_newsfeed(scouts_url)
 end
