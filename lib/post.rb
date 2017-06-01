@@ -1,5 +1,3 @@
-require 'pry'
-
 class Post
   puts "Post class is being run"
 

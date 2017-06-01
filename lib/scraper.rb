@@ -1,11 +1,7 @@
-require 'open-uri'
-require 'pry'
-require 'nokogiri'
-
 class Scraper
   puts "Scraper class is being run"
 
-  def initialize(path = self.path)
+  def initialize(path = default_path)
     @posts = []
     @path = path
     @page = Nokogiri::HTML(open(path))
@@ -34,7 +30,7 @@ class Scraper
     end
   end
 
-  def path
+  def default_path
     "http://www.scout.com/college/football/recruiting/news?type=stories&sortBy=Date&site=ScoutFootball.com"
   end
 end
