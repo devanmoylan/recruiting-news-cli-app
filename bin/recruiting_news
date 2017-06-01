@@ -2,7 +2,7 @@
 
 require_relative '../config/environment.rb'
 
+RecruitingsNews::CLI.new.call
+
 scraper = Scraper.new
 scraper.run_scrape_on_scouts
-
-IRB.start
