@@ -4,8 +4,8 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'recruitings_news/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "recruitings_news"
-  spec.version       = RecruitingsNews::VERSION
+  spec.name          = "recruiting_news"
+  spec.version       = RecruitingNews::VERSION
   spec.authors       = ["'Devan Moylan'"]
   spec.email         = ["'dmmoylan@gmail.com'"]
 
