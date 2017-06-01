@@ -1,6 +1,10 @@
 #!/usr/bin/env ruby
 
-require_relative "../lib/command_line_interface.rb"
+require_relative "../lib/scraper.rb"
+require_relative "../lib/post.rb"
+require "irb"
 
+scraper = Scraper.new
+scraper.run_scrape_on_scouts
 
-CommandLineInterface.new.run
+IRB.start
