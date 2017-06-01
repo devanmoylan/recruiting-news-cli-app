@@ -1,6 +1,7 @@
 require 'pry'
 
 class Post
+  puts "Post class is being run"
 
   attr_accessor :title, :author, :time, :description, :link
 

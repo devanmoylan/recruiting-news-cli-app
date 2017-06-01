@@ -1,11 +1,9 @@
 require 'open-uri'
 require 'pry'
 require 'nokogiri'
-require_relative '../lib/post'
-
-puts "Scraper class is being run"
 
 class Scraper
+  puts "Scraper class is being run"
 
   def initialize(path = self.path)
     @posts = []
