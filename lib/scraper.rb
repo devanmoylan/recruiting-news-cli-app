@@ -8,7 +8,7 @@ class Scraper
   end
 
   def gather_posts_from_scouts
-    @page.css(".story-list-item").each_with_index do |post, index|
+    @page.css(".story-list-item").first(10).each_with_index do |post, index|
       @posts[index] = {
         :title => post.css(".story-deck h1 a span").last.text,
         :author => post.css(".story-deck .story-from").text,
@@ -21,11 +21,11 @@ class Scraper
   end
 
   def gather_posts_from_bleacher_report
-    @page.css(".articleSummary").each_with_index do |post, index|
+    @page.css(".articleSummary").first(10).each_with_index do |post, index|
       @posts[index] = {
         :title => post.css(".articleContent .articleTitle h3").text,
         :author => post.css(".articleContent .authorInfo a .name").text + " " + post.css(".provider").text,
-        :time => "",
+        :time => Time.now,
         :description => "",
         :link => post.css(".articleContent .articleTitle").attribute("href").value
       }
@@ -33,15 +33,14 @@ class Scraper
     end
   end
 
-  def gather_posts_from_rivals
-    @page.css(".medium-article").each_with_index do |post, index|
-      binding.pry
+  def gather_posts_from_247sports
+    @page.css(".news-feed-list li").first(10).each_with_index do |post, index|
       @posts[index] = {
-        :title => post.css("").text,
-        :author => post.css("").text + " " + post.css(".provider").text,
-        :time => "",
+        :title => post.css("div h3").text,
+        :author => "via 247sports",
+        :time => post.css("div span").text,
         :description => "",
-        :link => post.css("").attribute("href").value
+        :link => post.css("a").attribute("href").value
       }
     return false if @posts.empty?
     end
@@ -63,8 +62,8 @@ class Scraper
     end
   end
 
-  def run_scrape_on_rivals
-    if !@page.nil? && gather_posts_from_rivals
+  def run_scrape_on_247sports
+    if !@page.nil? && gather_posts_from_247sports
       create_new_post
     end
   end

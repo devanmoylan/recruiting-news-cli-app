@@ -15,20 +15,21 @@ class RecruitingsNews::CLI
     input = nil
     while input != valid_exit
       puts "\n\nSelect a recruiting news source:"
-      puts "    1 - for Scout \n    2 - for Bleacher Report \n    3 - for Rivals \n    exit - to exit"
+      puts "    1 - for Scout \n    2 - for Bleacher Report \n    3 - for 247sports \n    exit - to exit"
       input = gets.strip.downcase
       case input
         when "1" then puts "\nLoading News from Scout...\n"
           load_news_from_scouts
         when "2" then puts "\nLoading News from Bleacher Report...\n"
           load_news_from_bleacher_report
-        when "3" then puts "\nLoading News from Rivals...\n"
-          load_news_from_rivals
+        when "3" then puts "\nLoading News from 247sports...\n"
+          load_news_from_247sports
         when "exit" then puts "\nExiting news sources. Enjoy your day.\n"
           break
         else puts "\nNot an option.\n"
       end
       number_of_posts_loaded
+      Post.reset!
     end
   end
 
@@ -52,9 +53,9 @@ class RecruitingsNews::CLI
     print_out_news
   end
 
-  def load_news_from_rivals
-    scraper = Scraper.new(rivals_path)
-    scraper.run_scrape_on_rivals
+  def load_news_from_247sports
+    scraper = Scraper.new(path_247sports)
+    scraper.run_scrape_on_247sports
     print_out_news
   end
 
@@ -70,8 +71,8 @@ class RecruitingsNews::CLI
     "http://bleacherreport.com/recruiting"
   end
 
-  def rivals_path
-    "https://basketballrecruiting.rivals.com/more_news"
+  def path_247sports
+    "http://247sports.com/Page/National-Signing-Day-Football-Recruiting-100134/Headlines#"
   end
 
 end
