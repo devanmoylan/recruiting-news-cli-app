@@ -3,32 +3,55 @@ class RecruitingsNews::CLI
   puts "CLI is running"
 
   def call
-    list_news
-    news_options
+    news_source_options
   end
 
-  def list_news
+  def list_all_news
     puts "The most recent recruiting news:"
-    puts <<-DOC
-    1. Devan stands out!
-    2. Great new recruit!
-    DOC
+    Post.all.each {|post| puts "\n\nSubject: #{post.title}\n#{post.author}\n#{post.description}\nLearn more at #{post.link}"}
   end
 
-  def news_options
+  def news_source_options
     input = nil
     while input != "exit"
-      puts "Recruiting news sources:"
-      puts "1 - for Scout \n2 - for Bleacher Report \n3 - for Rivals \nexit - to exit"
+      puts "\n\nSelect a recruiting news source:"
+      puts "    1 - for Scout \n    2 - for Bleacher Report \n    3 - for Rivals \n    exit - to exit"
       input = gets.strip.downcase
       case input
-        when "1" then puts "Loading News from Scout"
-        when "2" then puts "Loading News from Bleacher Report"
-        when "3" then puts "Loading News from Rivals"
-        when "exit" then puts "Exiting news sources"
-        else puts "Not an option."
+      when "1" then puts "\nLoading News from Scout...\n"
+          load_news_from_scouts
+          puts "\n#{Post.all.count} posts from Scout loaded.\n"
+        when "2" then puts "\nLoading News from Bleacher Report...\n"
+          load_news_from_bleacher_report
+        when "3" then puts "\nLoading News from Rivals...\n"
+        when "exit" then puts "\nExiting news sources. Enjoy your day.\n"
+        else puts "\nNot an option.\n"
       end
     end
+  end
+
+  def load_news_from_scouts
+    scraper = Scraper.new(scout_path)
+    scraper.run_scrape_on_scouts
+    print_out_news
+  end
+
+  def load_news_from_bleacher_report
+    scraper = Scraper.new(bleacher_report_path)
+    scraper.run_scrape_on_bleacher_report
+    print_out_news
+  end
+
+  def print_out_news
+    Post.all.each {|post| puts "\n\nSubject: #{post.title}\n#{post.author}\n#{post.description}\nLearn more at #{post.link}\n"}
+  end
+
+  def scout_path
+    "http://www.scout.com/college/football/recruiting/news?type=stories&sortBy=Date&site=ScoutFootball.com"
+  end
+
+  def bleacher_report_path
+    "http://bleacherreport.com/recruiting"
   end
 
 end
